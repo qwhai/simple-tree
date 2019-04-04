@@ -4,6 +4,8 @@ import simple.tree.bst.model.Element;
 import simple.tree.bst.model.TreeNode;
 
 /**
+ * 二叉搜索树
+ *
  * @Author: Q-WHai
  * @Date: Created in 16:15 2019/04/04
  */
@@ -22,6 +24,10 @@ class BSTree {
 
     TreeNode find(int x) {
         return find(x, root);
+    }
+
+    void remove(int x) {
+        // TODO
     }
 
     private void clear() {

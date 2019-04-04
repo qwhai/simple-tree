@@ -73,4 +73,24 @@ public class BSTreeTest {
         TreeNode node = tree.find(5);
         Assert.assertNull(node);
     }
+
+    @Test
+    public void test4() {
+        Element[] elements = new Element[] {
+                new Element(8),
+                new Element(3),
+                new Element(10),
+                new Element(1),
+                new Element(6),
+                new Element(14),
+                new Element(4),
+                new Element(7),
+                new Element(13)
+        };
+
+        BSTree tree = new BSTree();
+        tree.build(elements);
+
+        tree.remove(1);
+    }
 }

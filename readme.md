@@ -18,6 +18,7 @@
     - B* Tree
 - 字典树 (Trie Tree)
     - Double-Array Trie
+- 森林
 
 ### Ref 
 - https://blog.csdn.net/qq_42011541/article/details/80547098
