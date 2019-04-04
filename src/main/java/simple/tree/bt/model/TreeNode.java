@@ -2,7 +2,7 @@ package simple.tree.bt.model;
 
 public class TreeNode implements INode {
 
-    int val;
+    public int val;
     public INode left;
     public INode right;
 
