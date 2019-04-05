@@ -6,8 +6,8 @@ import simple.tree.bst.model.TreeNode;
 /**
  * 二叉搜索树
  *
- * @Author: Q-WHai
- * @Date: Created in 16:15 2019/04/04
+ * @Author:     Q-WHai
+ * @Date:       Created in 16:15 2019/04/04
  */
 class BSTree {
 
@@ -15,6 +15,11 @@ class BSTree {
 
     BSTree() { }
 
+    /**
+     * 构建二叉搜索树
+     *
+     * @param elements  输入数据
+     */
     void build(Element[] elements) {
         clear();
         for (Element e : elements) {
@@ -22,10 +27,21 @@ class BSTree {
         }
     }
 
+    /**
+     * 查找数值x
+     *
+     * @param x     待查找数值
+     * @return      对应节点
+     */
     TreeNode find(int x) {
         return find(x, root);
     }
 
+    /**
+     * 移除数值为x的节点
+     *
+     * @param x     待移除数值
+     */
     void remove(int x) {
         // TODO
     }
