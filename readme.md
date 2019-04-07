@@ -7,10 +7,14 @@
         - 中序遍历 (In-order Traversal)
         - 后序遍历 (Post-order Traversal)
         - 层序遍历 (Level-order Traversal)
+    - 完全二叉树
     - 二叉搜索树 (Binary Search Tree)
     - 平衡二叉树 (Balanced Binary Tree)
+    - 线索二叉树 (Threaded BinaryTree)
+        - 前序线索二叉树
+        - 中序线索二叉树
+        - 后序线索二叉树
     - 红黑树 (Red and black tree)
-    - 线索树 (Threaded BinaryTree)
 - 平衡树 (Balance Tree)
     - B-Tree
     - 2-3查找树
@@ -20,6 +24,4 @@
     - Double-Array Trie
 - 森林
 - 哈夫曼树
-
-### Ref 
-- https://blog.csdn.net/qq_42011541/article/details/80547098
+- 基于日志结构的合并树 (Log-Structured Merge-Tree 或 LSM-Tree)
