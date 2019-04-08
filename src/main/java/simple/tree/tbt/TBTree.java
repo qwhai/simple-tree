@@ -85,7 +85,7 @@ class TBTree {
      */
     List<Element> inorderTraversal() {
         List<Element> list = new ArrayList<>();
-        inorderTraversal(root, list);
+        inorderTraversal(findLeftmostNode(root), list);
 
         return list;
     }
@@ -98,7 +98,13 @@ class TBTree {
      */
     List<Element> postorderTraversal() {
         List<Element> list = new ArrayList<>();
-        postorderTraversal(root, list);
+        //postorderTraversal(findLeftmostNode(root), list);
+
+        INode node = findLeftmostNode(root);
+        postorderTraversal(node, list);
+        //INode node2 = findLeftmostNode(root, );
+        //postorderTraversal(node2, list);
+        list.add(new Element(((TreeNode)root).getVal()));
 
         return list;
     }
@@ -187,18 +193,35 @@ class TBTree {
         }
     }
 
-    List<Element> inorderTraversal(INode node, List<Element> elements) {
-        // TODO
+    private void inorderTraversal(INode node, List<Element> elements) {
+        if (null == node) return;
 
-
-        return null;
+        elements.add(new Element(((TreeNode)node).getVal()));
+        inorderTraversal(node.getRight(), elements);
     }
 
-    List<Element> postorderTraversal(INode node, List<Element> elements) {
-        // TODO
+    private INode findLeftmostNode(INode node) {
+        return null == node.getLeft() ? node : findLeftmostNode(node.getLeft());
+    }
 
+    private INode findLeftmostNode(INode node, INode last) {
+        return last == node.getLeft() ? node : findLeftmostNode(node.getLeft(), last);
+    }
 
-        return null;
+    private void postorderTraversal(INode node, List<Element> elements) {
+        if (null == node) return; // TODO
+
+        elements.add(new Element(((TreeNode)node).getVal()));
+
+        if (node.getRtag()) {
+            postorderTraversal(node.getRight(), elements);
+        } else {
+            if (node.getParent() == root) {
+                // TODO
+            } else {
+                postorderTraversal(node.getParent(), elements);
+            }
+        }
     }
 
     private void clear() {
@@ -218,9 +241,13 @@ class TBTree {
         INode n1 = nodesQueue.peek();
         if (null == n1.getLeft()) {
             n1.setLeft(node);
+            node.setParent(n1);
+
             if (n1.getLeft() instanceof TreeNode) nodesQueue.add(n1.getLeft());
         } else if (null == n1.getRight()) {
             n1.setRight(node);
+            node.setParent(n1);
+
             if (n1.getRight() instanceof TreeNode) nodesQueue.add(n1.getRight());
             nodesQueue.poll();
         }

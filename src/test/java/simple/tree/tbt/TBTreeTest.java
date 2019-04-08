@@ -84,7 +84,7 @@ public class TBTreeTest {
         tree.inorderThreading();
 
         Assert.assertNotNull(tree);
-        logElements(tree.inorderTraversal(), "中序遍历"); // TODO
+        logElements(tree.inorderTraversal(), "中序遍历");
     }
 
     // 测试后序线索化
@@ -108,7 +108,7 @@ public class TBTreeTest {
         tree.build(elements);
 
         tree.postorderThreading();
-        logElements(tree.postorderTraversal(), "中序遍历"); // TODO
+        logElements(tree.postorderTraversal(), "后序遍历"); // TODO
     }
 
     // 测试层序线索化

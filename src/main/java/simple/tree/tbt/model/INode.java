@@ -17,4 +17,7 @@ public interface INode {
 
     INode getRight();
     void setRight(INode right);
+
+    INode getParent();
+    void setParent(INode parent);
 }

@@ -13,6 +13,7 @@ public class TreeNode implements INode {
 
     private INode left;
     private INode right;
+    private INode parent;
 
     public TreeNode(int val) {
         this.val = val;
@@ -56,6 +57,14 @@ public class TreeNode implements INode {
 
     public void setRight(INode right) {
         this.right = right;
+    }
+
+    public INode getParent() {
+        return parent;
+    }
+
+    public void setParent(INode parent) {
+        this.parent = parent;
     }
 
     @Override
