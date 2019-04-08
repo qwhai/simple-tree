@@ -23,7 +23,7 @@ class BSTree {
     void build(Element[] elements) {
         clear();
         for (Element e : elements) {
-            insert(new TreeNode(e.val));
+            insert(new TreeNode(e.getVal()));
         }
     }
 
@@ -63,25 +63,25 @@ class BSTree {
     private void insert(TreeNode node, TreeNode parent) {
         if (null == node) return;
 
-        if (parent.val > node.val) {
-            if (null == parent.left) {
-                parent.left = node;
-                node.parent = parent;
+        if (parent.getVal() > node.getVal()) {
+            if (null == parent.getLeft()) {
+                parent.setLeft(node);
+                node.setParent(parent);
             }
-            else insert(node, parent.left);
-        } else if (parent.val < node.val) {
-            if (null == parent.right) {
-                parent.right = node;
-                node.parent = parent;
+            else insert(node, parent.getLeft());
+        } else if (parent.getVal() < node.getVal()) {
+            if (null == parent.getRight()) {
+                parent.setRight(node);
+                node.setParent(parent);
             }
-            else insert(node, parent.right);
+            else insert(node, parent.getRight());
         }
     }
 
     private TreeNode find(int x, TreeNode node) {
-        if (x == node.val) return node;
-        if (x < node.val && null == node.left) return null;
-        if (x < node.val) return find(x, node.left);
-        return null == node.right ? null : find(x, node.right);
+        if (x == node.getVal()) return node;
+        if (x < node.getVal() && null == node.getLeft()) return null;
+        if (x < node.getVal()) return find(x, node.getLeft());
+        return null == node.getRight() ? null : find(x, node.getRight());
     }
 }

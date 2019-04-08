@@ -1,8 +1,8 @@
-package simple.tree.bst.model;
+package simple.tree.tbt.model;
 
 /**
  * @Author: Q-WHai
- * @Date: Created in 16:39 2019/04/04
+ * @Date: Created in 10:22 2019/04/08
  */
 public class Element {
 
@@ -16,7 +16,8 @@ public class Element {
         return val;
     }
 
-    public void setVal(int val) {
-        this.val = val;
+    @Override
+    public String toString() {
+        return String.format("[%d]", getVal());
     }
 }

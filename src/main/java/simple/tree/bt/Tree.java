@@ -10,6 +10,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+ * 二叉树
+ *
+ * @Author: Q-WHai
+ * @Date: Created in 09:54 2019/04/03
+ */
 public class Tree {
 
     private INode root;
@@ -25,7 +31,7 @@ public class Tree {
         clear();
         nodesQueue = new ArrayBlockingQueue<>(input.length);
         for (Element e : input) {
-            insert(null == e ? new NILNode() : new TreeNode(e.val));
+            insert(null == e ? new NILNode() : new TreeNode(e.getVal()));
         }
 
         while (!nodesQueue.isEmpty()) nodesQueue.poll();
@@ -37,7 +43,7 @@ public class Tree {
      *      遍历结果
      */
     List<Element> preorderTraversal() {
-        List<Element> list = new ArrayList<>();
+        List<Element> list = new ArrayList<>(); // 保存结果list
         preorder(root, list);
         return list;
     }
@@ -46,9 +52,9 @@ public class Tree {
         if (null == node) return;
 
         if (node instanceof TreeNode) {
-            elements.add(new Element(((TreeNode)node).val));
-            preorder(((TreeNode) node).left, elements);
-            preorder(((TreeNode) node).right, elements);
+            elements.add(new Element(((TreeNode)node).getVal()));
+            preorder(((TreeNode) node).getLeft(), elements);
+            preorder(((TreeNode) node).getRight(), elements);
         } else if (node instanceof NILNode) {
             elements.add(null);
         }
@@ -69,9 +75,9 @@ public class Tree {
         if (null == node) return;
 
         if (node instanceof TreeNode) {
-            inorder(((TreeNode) node).left, elements);
-            elements.add(new Element(((TreeNode)node).val));
-            inorder(((TreeNode) node).right, elements);
+            inorder(((TreeNode) node).getLeft(), elements);
+            elements.add(new Element(((TreeNode)node).getVal()));
+            inorder(((TreeNode) node).getRight(), elements);
         } else if (node instanceof NILNode) {
             elements.add(null);
         }
@@ -92,9 +98,9 @@ public class Tree {
         if (null == node) return;
 
         if (node instanceof TreeNode) {
-            postorder(((TreeNode) node).left, elements);
-            postorder(((TreeNode) node).right, elements);
-            elements.add(new Element(((TreeNode)node).val));
+            postorder(((TreeNode) node).getLeft(), elements);
+            postorder(((TreeNode) node).getRight(), elements);
+            elements.add(new Element(((TreeNode)node).getVal()));
         } else if (node instanceof NILNode) {
             elements.add(null);
         }
@@ -118,10 +124,10 @@ public class Tree {
         if (node instanceof NILNode) {
             elements.add(null);
         } else if (node instanceof TreeNode) {
-            elements.add(new Element(((TreeNode)node).val));
+            elements.add(new Element(((TreeNode)node).getVal()));
 
-            INode left = ((TreeNode) node).left;
-            INode right = ((TreeNode) node).right;
+            INode left = ((TreeNode) node).getLeft();
+            INode right = ((TreeNode) node).getRight();
 
             if (left instanceof TreeNode) queue.add((TreeNode)left);
             if (right instanceof TreeNode) queue.add((TreeNode)right);
@@ -143,12 +149,12 @@ public class Tree {
         }
 
         TreeNode n1 = nodesQueue.peek();
-        if (null == n1.left) {
-            n1.left = node;
-            if (n1.left instanceof TreeNode) nodesQueue.add((TreeNode)n1.left);
-        } else if (null == n1.right) {
-            n1.right = node;
-            if (n1.right instanceof TreeNode) nodesQueue.add((TreeNode)n1.right);
+        if (null == n1.getLeft()) {
+            n1.setLeft(node);
+            if (n1.getLeft() instanceof TreeNode) nodesQueue.add((TreeNode)n1.getLeft());
+        } else if (null == n1.getRight()) {
+            n1.setRight(node);
+            if (n1.getRight() instanceof TreeNode) nodesQueue.add((TreeNode)n1.getRight());
             nodesQueue.poll();
         }
     }

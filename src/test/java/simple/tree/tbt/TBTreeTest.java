@@ -1,24 +1,29 @@
-package simple.tree.bt;
+package simple.tree.tbt;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import simple.tree.bt.model.Element;
+import simple.tree.tbt.model.Element;
 
 import java.util.List;
 
-public class TreeTest {
+/**
+ * @Author: Q-WHai
+ * @Date: Created in 10:38 2019/04/08
+ */
+public class TBTreeTest {
 
-    private Logger logger = Logger.getLogger(TreeTest.class);
+    private Logger logger = Logger.getLogger(TBTreeTest.class);
 
+    // 测试TBTree创建
     @Test
     public void test1() {
         Element[] elements = new Element[] {
                 new Element(1),
                 new Element(2),
                 new Element(3),
-                new Element(4),
-                new Element(5),
+                null,
+                null,
                 new Element(6),
                 new Element(7),
                 new Element(8),
@@ -26,33 +31,37 @@ public class TreeTest {
                 new Element(10),
         };
 
-        Tree tree = new Tree();
+        TBTree tree = new TBTree();
         tree.build(elements);
 
         Assert.assertNotNull(tree);
     }
 
+    // 测试前序线索化
     @Test
     public void test2() {
         Element[] elements = new Element[] {
                 new Element(1),
                 new Element(2),
                 new Element(3),
-                null,
+                new Element(4),
+                new Element(5),
                 null,
                 new Element(6),
-                new Element(7),
-                new Element(8),
                 null,
-                new Element(10),
+                null,
+                new Element(7),
+                new Element(8)
         };
 
-        Tree tree = new Tree();
+        TBTree tree = new TBTree();
         tree.build(elements);
 
-        Assert.assertNotNull(tree);
+        tree.preorderThreading();
+        logElements(tree.preorderTraversal(), "前序遍历");
     }
 
+    // 测试中序线索化
     @Test
     public void test3() {
         Element[] elements = new Element[] {
@@ -69,12 +78,16 @@ public class TreeTest {
                 new Element(8)
         };
 
-        Tree tree = new Tree();
+        TBTree tree = new TBTree();
         tree.build(elements);
 
-        logElements(tree.preorderTraversal(), "前序遍历");
+        tree.inorderThreading();
+
+        Assert.assertNotNull(tree);
+        logElements(tree.inorderTraversal(), "中序遍历"); // TODO
     }
 
+    // 测试后序线索化
     @Test
     public void test4() {
         Element[] elements = new Element[] {
@@ -91,12 +104,14 @@ public class TreeTest {
                 new Element(8)
         };
 
-        Tree tree = new Tree();
+        TBTree tree = new TBTree();
         tree.build(elements);
 
-        logElements(tree.inorderTraversal(), "中序遍历");
+        tree.postorderThreading();
+        logElements(tree.postorderTraversal(), "中序遍历"); // TODO
     }
 
+    // 测试层序线索化
     @Test
     public void test5() {
         Element[] elements = new Element[] {
@@ -113,32 +128,12 @@ public class TreeTest {
                 new Element(8)
         };
 
-        Tree tree = new Tree();
+        TBTree tree = new TBTree();
         tree.build(elements);
 
-        logElements(tree.postorderTraversal(), "后序遍历");
-    }
+        tree.levelorderThreading();
 
-    @Test
-    public void test6() {
-        Element[] elements = new Element[] {
-                new Element(1),
-                new Element(2),
-                new Element(3),
-                new Element(4),
-                new Element(5),
-                null,
-                new Element(6),
-                null,
-                null,
-                new Element(7),
-                new Element(8)
-        };
-
-        Tree tree = new Tree();
-        tree.build(elements);
-
-        logElements(tree.levelorderTraversal(), "层序遍历");
+        Assert.assertNotNull(tree);
     }
 
     private void logElements(List<Element> elements, String hints) {

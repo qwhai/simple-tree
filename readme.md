@@ -1,19 +1,19 @@
 ## simple-tree
 > demos for tree training
 
-- 二叉树 (Binary Tree)
-    - 二叉树的遍历 (Traversing Binary Tree)
-        - 前序遍历 (Pre-order Traversal)
-        - 中序遍历 (In-order Traversal)
-        - 后序遍历 (Post-order Traversal)
-        - 层序遍历 (Level-order Traversal)
+- [二叉树 (Binary Tree)](src/main/java/simple/tree/bt)
+    - [二叉树的遍历 (Traversing Binary Tree)](src/main/java/simple/tree/bt)
+        - [前序遍历 (Pre-order Traversal)](src/main/java/simple/tree/bt)
+        - [中序遍历 (In-order Traversal)](src/main/java/simple/tree/bt)
+        - [后序遍历 (Post-order Traversal)](src/main/java/simple/tree/bt)
+        - [层序遍历 (Level-order Traversal)](src/main/java/simple/tree/bt)
     - 完全二叉树
-    - 二叉搜索树 (Binary Search Tree)
-    - 平衡二叉树 (Balanced Binary Tree)
-    - 线索二叉树 (Threaded BinaryTree)
-        - 前序线索二叉树
-        - 中序线索二叉树
-        - 后序线索二叉树
+    - [二叉搜索树 (Binary Search Tree)](src/main/java/simple/tree/bst)
+    - [平衡二叉树 (Balanced Binary Tree)](src/main/java/simple/tree/avl)
+    - [线索二叉树 (Threaded BinaryTree)](src/main/java/simple/tree/tbt)
+        - [前序线索二叉树](src/main/java/simple/tree/tbt)
+        - [中序线索二叉树](src/main/java/simple/tree/tbt)
+        - [后序线索二叉树](src/main/java/simple/tree/tbt)
     - 红黑树 (Red and black tree)
 - 平衡树 (Balance Tree)
     - B-Tree

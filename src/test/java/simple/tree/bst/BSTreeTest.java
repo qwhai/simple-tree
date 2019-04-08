@@ -50,7 +50,7 @@ public class BSTreeTest {
 
         TreeNode node = tree.find(13);
         Assert.assertNotNull(node);
-        Assert.assertEquals(13, node.val);
+        Assert.assertEquals(13, node.getVal());
     }
 
     @Test
