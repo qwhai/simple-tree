@@ -65,46 +65,83 @@ class TBTree {
     }
 
     /**
-     * 前序遍历二叉树
+     * 前序遍历线索二叉树
      *
      * @return
      *      遍历结果
      */
     List<Element> preorderTraversal() {
         List<Element> list = new ArrayList<>();
-        preorderTraversal(root, list);
+        preorder(root, list);
 
         return list;
     }
 
     /**
-     * 中序遍历二叉树
+     * 中序遍历线索二叉树
      *
      * @return
      *      遍历结果
      */
     List<Element> inorderTraversal() {
         List<Element> list = new ArrayList<>();
-        inorderTraversal(findLeftmostNode(root), list);
+
+        INode node = root;
+        while (null != node) {
+            node = findLeftmostNode(node);
+            list.add(new Element(((TreeNode)node).getVal()));
+            while (node.getRtag()) {
+                node = node.getRight();
+                list.add(new Element(((TreeNode)node).getVal()));
+            }
+
+            node = node.getRight();
+        }
 
         return list;
     }
 
     /**
-     * 后序遍历二叉树
+     * 后序遍历线索二叉树
      *
      * @return
      *      遍历结果
      */
     List<Element> postorderTraversal() {
         List<Element> list = new ArrayList<>();
-        //postorderTraversal(findLeftmostNode(root), list);
 
-        INode node = findLeftmostNode(root);
-        postorderTraversal(node, list);
-        //INode node2 = findLeftmostNode(root, );
-        //postorderTraversal(node2, list);
-        list.add(new Element(((TreeNode)root).getVal()));
+        INode node = root;
+        INode last = null;
+        while (root != last) {
+            if (null == node) continue;
+
+            // 找到最左端节点
+            while (!node.getLtag()) {
+                node = node.getLeft();
+            }
+
+            // 一直遍历后继节点
+            while (null != node && node.getRtag()) {
+                list.add(new Element(((TreeNode)node).getVal()));
+                last = node;
+                node = node.getRight();
+            }
+
+            if (null == node) continue;
+
+            // Note: [node.getRight() == last]这步是关键，这是处理从左子树到右子树的关键所在
+            while (root != last && node.getRight() == last) {
+                list.add(new Element(((TreeNode)node).getVal()));
+                last = node;
+                if (last != root) {
+                    node = node.getParent();
+                }
+            }
+
+            if (!node.getRtag()) {
+                node = node.getRight();
+            }
+        }
 
         return list;
     }
@@ -181,47 +218,24 @@ class TBTree {
         levelorderThreading(nodesQueue.poll(), node);
     }
 
-    private void preorderTraversal(INode node, List<Element> elements) {
+    private void preorder(INode node, List<Element> elements) {
         if (null == node || node instanceof NILNode) return;
 
         elements.add(new Element(((TreeNode)node).getVal()));
 
         if (!node.getLtag()) {
-            preorderTraversal(node.getLeft(), elements);
+            preorder(node.getLeft(), elements);
         } else {
-            preorderTraversal(node.getRight(), elements);
+            preorder(node.getRight(), elements);
         }
-    }
-
-    private void inorderTraversal(INode node, List<Element> elements) {
-        if (null == node) return;
-
-        elements.add(new Element(((TreeNode)node).getVal()));
-        inorderTraversal(node.getRight(), elements);
     }
 
     private INode findLeftmostNode(INode node) {
-        return null == node.getLeft() ? node : findLeftmostNode(node.getLeft());
-    }
-
-    private INode findLeftmostNode(INode node, INode last) {
-        return last == node.getLeft() ? node : findLeftmostNode(node.getLeft(), last);
-    }
-
-    private void postorderTraversal(INode node, List<Element> elements) {
-        if (null == node) return; // TODO
-
-        elements.add(new Element(((TreeNode)node).getVal()));
-
-        if (node.getRtag()) {
-            postorderTraversal(node.getRight(), elements);
-        } else {
-            if (node.getParent() == root) {
-                // TODO
-            } else {
-                postorderTraversal(node.getParent(), elements);
-            }
+        while (null != node.getLeft() && !node.getLtag()) {
+            node = node.getLeft();
         }
+
+        return node;
     }
 
     private void clear() {
