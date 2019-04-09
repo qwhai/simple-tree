@@ -14,7 +14,7 @@
         - [前序线索二叉树](src/main/java/simple/tree/tbt)
         - [中序线索二叉树](src/main/java/simple/tree/tbt)
         - [后序线索二叉树](src/main/java/simple/tree/tbt)
-    - 红黑树 (Red and black tree)
+    - [红黑树 (Red and black tree)](src/main/java/simple/tree/rbt)
 - 平衡树 (Balance Tree)
     - B-Tree
     - 2-3查找树
