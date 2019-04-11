@@ -25,3 +25,4 @@
 - 森林
 - 哈夫曼树
 - 基于日志结构的合并树 (Log-Structured Merge-Tree 或 LSM-Tree)
+- KP树 (Burkhard-Keller树)

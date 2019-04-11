@@ -4,27 +4,13 @@ package simple.tree.rbt.model;
  * @Author: Q-WHai
  * @Date: Created in 15:44 2019/04/09
  */
-public class NILNode {
+public class NILNode implements INode {
 
-    private INode left;
-    private INode right;
     private INode parent;
     private NodeSkin skin;
 
-    public INode getLeft() {
-        return left;
-    }
-
-    public void setLeft(INode left) {
-        this.left = left;
-    }
-
-    public INode getRight() {
-        return right;
-    }
-
-    public void setRight(INode right) {
-        this.right = right;
+    public NILNode() {
+        skin = NodeSkin.Black;
     }
 
     public INode getParent() {

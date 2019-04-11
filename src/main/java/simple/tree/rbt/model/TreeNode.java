@@ -12,6 +12,14 @@ public class TreeNode implements INode {
     private INode parent;
     private NodeSkin skin;
 
+    public TreeNode(int val) {
+        setVal(val);
+        setSkin(NodeSkin.Red);
+
+        setLeft(new NILNode());
+        setRight(new NILNode());
+    }
+
     public int getVal() {
         return val;
     }
@@ -26,6 +34,7 @@ public class TreeNode implements INode {
 
     public void setLeft(INode left) {
         this.left = left;
+        left.setParent(this);
     }
 
     public INode getRight() {
@@ -34,6 +43,7 @@ public class TreeNode implements INode {
 
     public void setRight(INode right) {
         this.right = right;
+        right.setParent(this);
     }
 
     public INode getParent() {
