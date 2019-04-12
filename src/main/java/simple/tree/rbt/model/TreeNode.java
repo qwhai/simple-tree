@@ -9,7 +9,7 @@ public class TreeNode implements INode {
     private int val;
     private INode left;
     private INode right;
-    private INode parent;
+    private TreeNode parent;
     private NodeSkin skin;
 
     public TreeNode(int val) {
@@ -46,11 +46,11 @@ public class TreeNode implements INode {
         right.setParent(this);
     }
 
-    public INode getParent() {
+    public TreeNode getParent() {
         return parent;
     }
 
-    public void setParent(INode parent) {
+    public void setParent(TreeNode parent) {
         this.parent = parent;
     }
 

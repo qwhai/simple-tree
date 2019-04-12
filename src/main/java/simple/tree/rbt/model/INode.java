@@ -6,8 +6,8 @@ package simple.tree.rbt.model;
  */
 public interface INode {
 
-    INode getParent();
-    void setParent(INode parent);
+    TreeNode getParent();
+    void setParent(TreeNode parent);
 
     NodeSkin getSkin();
     void setSkin(NodeSkin skin);

@@ -33,8 +33,33 @@ public class RBTreeTest {
         tree.build(elements);
     }
 
+    // 测试红黑树的变色及旋转
     @Test
     public void test2() {
+        Element[] elements = new Element[] {
+                new Element(13),
+                new Element(17),
+                new Element(8),
+                new Element(1),
+                new Element(25),
+                new Element(15),
+                new Element(11),
+                new Element(6),
+                new Element(22),
+                new Element(27)
+        };
+
+        RBTree tree = new RBTree();
+        tree.build(elements);
+
+        tree.insert(new Element(21));
+
+        logger.info(tree);
+    }
+
+    // 测试获取祖先节点
+    @Test
+    public void test3() {
         Element[] elements = new Element[] {
                 new Element(13),
                 new Element(17),
@@ -52,6 +77,103 @@ public class RBTreeTest {
         RBTree tree = new RBTree();
         tree.build(elements);
 
+        Element[] es = tree.progenitors(new Element(25)); // TODO
+        logger.info(es);
+    }
+
+    // 测试获取后继节点
+    @Test
+    public void test4() {
+        Element[] elements = new Element[] {
+                new Element(13),
+                new Element(17),
+                new Element(8),
+                new Element(1),
+                new Element(25),
+                new Element(15),
+                new Element(11),
+                new Element(6),
+                new Element(22),
+                new Element(27),
+                new Element(21),
+        };
+
+        RBTree tree = new RBTree();
+        tree.build(elements);
+
+        Element[] es = tree.successors(new Element(25)); // TODO
+        logger.info(es);
+    }
+
+    // 测试获取最小值节点
+    @Test
+    public void test5() {
+        Element[] elements = new Element[] {
+                new Element(13),
+                new Element(17),
+                new Element(8),
+                new Element(1),
+                new Element(25),
+                new Element(15),
+                new Element(11),
+                new Element(6),
+                new Element(22),
+                new Element(27),
+                new Element(21),
+        };
+
+        RBTree tree = new RBTree();
+        tree.build(elements);
+
+        Element min = tree.minimum(); // TODO
+        logger.info(min);
+    }
+
+    // 测试获取最大值节点
+    @Test
+    public void test6() {
+        Element[] elements = new Element[] {
+                new Element(13),
+                new Element(17),
+                new Element(8),
+                new Element(1),
+                new Element(25),
+                new Element(15),
+                new Element(11),
+                new Element(6),
+                new Element(22),
+                new Element(27),
+                new Element(21),
+        };
+
+        RBTree tree = new RBTree();
+        tree.build(elements);
+
+        Element max = tree.maximum(); // TODO
+        logger.info(max);
+    }
+
+    // 测试删除节点
+    @Test
+    public void test7() {
+        Element[] elements = new Element[] {
+                new Element(13),
+                new Element(17),
+                new Element(8),
+                new Element(1),
+                new Element(25),
+                new Element(15),
+                new Element(11),
+                new Element(6),
+                new Element(22),
+                new Element(27),
+                new Element(21),
+        };
+
+        RBTree tree = new RBTree();
+        tree.build(elements);
+
+        tree.remove(new Element(8)); // TODO
         logger.info(tree);
     }
 }

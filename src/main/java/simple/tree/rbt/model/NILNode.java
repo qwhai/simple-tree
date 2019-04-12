@@ -6,18 +6,18 @@ package simple.tree.rbt.model;
  */
 public class NILNode implements INode {
 
-    private INode parent;
+    private TreeNode parent;
     private NodeSkin skin;
 
     public NILNode() {
         skin = NodeSkin.Black;
     }
 
-    public INode getParent() {
+    public TreeNode getParent() {
         return parent;
     }
 
-    public void setParent(INode parent) {
+    public void setParent(TreeNode parent) {
         this.parent = parent;
     }
 
