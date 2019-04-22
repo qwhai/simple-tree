@@ -155,7 +155,71 @@ public class RBTree {
         adjust(node);
     }
 
+    /*
     private void adjust(TreeNode node) {
+        // 小于3层不用操作
+        while (null != node.getParent() && null != node.getParent().getParent() && NodeSkin.Red == node.getParent().getSkin()) {
+            // 左外侧
+            if (node.getParent() == node.getParent().getParent().getLeft() && node == node.getParent().getLeft()) {
+                // 如果没有叔节点（只可能有一个红色叔节点）旋转一次，无需向上调整
+                if (null == node.getParent().getParent().getRight()) {
+                    node.getParent().setSkin(NodeSkin.Black);
+                    node.getParent().getParent().setSkin(NodeSkin.Red);
+                    rightRotate(node.getParent().getParent());
+                    break;
+                } else {
+                    node.setSkin(NodeSkin.Black);
+                    rightRotate(node.getParent().getParent());
+                    node = node.getParent();
+                }
+            }
+            // 右外侧
+            else if (node.getParent() == node.getParent().getParent().getRight() && node == node.getParent().getRight()) {
+                if (null == node.getParent().getParent().getLeft()) {
+                    node.getParent().setSkin(NodeSkin.Black);
+                    node.getParent().getParent().setSkin(NodeSkin.Red);
+                    leftRotate(node.getParent().getParent());
+                    break;
+                } else {
+                    node.setSkin(NodeSkin.Black);
+                    leftRotate(node.getParent().getParent());
+                    node = node.getParent();
+                }
+            }
+            // 左-右
+            else if (node.getParent() == node.getParent().getParent().getLeft() && node == node.getParent().getRight()) {
+                if (null == node.getParent().getParent().getRight()) {
+                    node.setSkin(NodeSkin.Black);
+                    node.getParent().getParent().setSkin(NodeSkin.Red);
+                    leftRotate(node.getParent());
+                    rightRotate(node.getParent());
+                    break;
+                } else {
+                    node.getParent().setSkin(NodeSkin.Black);
+                    leftRotate(node.getParent());
+                    rightRotate(node.getParent());
+                }
+            }
+            // 右-左
+            else if (node.getParent() == node.getParent().getParent().getRight() && node == node.getParent().getLeft()) {
+                if (null == node.getParent().getParent().getLeft()) {
+                    node.setSkin(NodeSkin.Black);
+                    node.getParent().getParent().setSkin(NodeSkin.Red);
+                    rightRotate(node.getParent());
+                    leftRotate(node.getParent());
+                    break;
+                } else {
+                    node.getParent().setSkin(NodeSkin.Black);
+                    rightRotate(node.getParent());
+                    leftRotate(node.getParent());
+                }
+            }
+        }
+    }*/
+
+    /*
+    private void adjust(TreeNode node) {
+        // 只有当父节点为红色才需要进行平衡处理
         while (NodeSkin.Red == node.getParent().getSkin()) {
             if (node.getParent() == node.getParent().getParent().getLeft()) {
                 INode right = node.getParent().getParent().getRight();
@@ -167,27 +231,104 @@ public class RBTree {
                     node = node.getParent().getParent();
                 } else if (node == node.getParent().getRight()) {
                     node = node.getParent();
-                    // TODO LEFT-ROTATE
-                    rotateRight(node);
+                    rightRotate(node);
                 }
 
                 node.getParent().setSkin(NodeSkin.Black);
                 node.getParent().getParent().setSkin(NodeSkin.Red);
-                // TODO RIGHT-ROTATE
-                rotateLeft(node.getParent().getParent());
+                leftRotate(node.getParent().getParent());
+            } else {
+                // TODO
+                INode left = node.getParent().getParent().getLeft();
+                if (NodeSkin.Red == left.getSkin()) {
+                    node.getParent().setSkin(NodeSkin.Black);
+                    left.setSkin(NodeSkin.Black);
+                    node.getParent().getParent().setSkin(NodeSkin.Red);
+
+                    node = node.getParent().getParent();
+                } else if (node == node.getParent().getLeft()) {
+                    node = node.getParent();
+                    leftRotate(node);
+                }
+
+                node.getParent().setSkin(NodeSkin.Black);
+                node.getParent().getParent().setSkin(NodeSkin.Red);
+                rightRotate(node.getParent().getParent());
+            }
+        }
+    }*/
+
+    private void adjust(TreeNode node) {
+        // 只有当父节点为红色才需要进行平衡处理
+        while (NodeSkin.Red == node.getParent().getSkin()) {
+            if (node.getParent() == node.getParent().getParent().getLeft()) {
+                INode right = node.getParent().getParent().getRight();
+                if (NodeSkin.Red == right.getSkin()) {
+                    node.getParent().setSkin(NodeSkin.Black);
+                    right.setSkin(NodeSkin.Black);
+                    node.getParent().getParent().setSkin(NodeSkin.Red);
+
+                    node = node.getParent().getParent();
+                } else if (node == node.getParent().getRight()) {
+                    node = node.getParent();
+                    rightRotate(node);
+                }
+
+                node.getParent().setSkin(NodeSkin.Black);
+                node.getParent().getParent().setSkin(NodeSkin.Red);
+                leftRotate(node.getParent().getParent());
             } else {
                 // TODO
             }
         }
     }
 
-    private void rotateLeft(TreeNode node) {
+    private void leftRotate(TreeNode node) {
         // TODO
-        INode right = node.getRight();
+        TreeNode temp = (TreeNode) node.getRight();
+        node.setRight(temp.getLeft());
+        if (null != node.getRight()) {
+            node.getRight().setParent(node);
+        }
 
+        temp.setParent(node.getParent());
+
+        if (null != temp.getParent()) {
+            if (node.getParent().getLeft() == node) {
+                temp.getParent().setLeft(temp);
+            } else {
+                temp.getParent().setRight(temp);
+            }
+        } else {
+            root = temp;
+        }
+
+        temp.setLeft(node);
+        node.setParent(temp);
     }
 
-    private void rotateRight(TreeNode node) {
+    private void rightRotate(TreeNode node) {
         // TODO
+        TreeNode temp = (TreeNode) node.getLeft();
+        node.setLeft(temp.getRight());
+
+        if (null != node.getLeft()) {
+            node.getLeft().setParent(node);
+        }
+
+        temp.setParent(node.getParent());
+
+        if (null != temp.getParent()) {
+            if (node.getParent().getLeft() == node) {
+                temp.getParent().setLeft(temp);
+            } else {
+                temp.getParent().setRight(temp);
+            }
+        } else {
+            root = temp;
+        }
+
+        temp.setRight(node);
+        node.setParent(temp);
     }
 }
