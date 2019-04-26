@@ -23,6 +23,6 @@
 - 字典树 (Trie Tree)
     - Double-Array Trie
 - 森林
-- 哈夫曼树
+- [哈夫曼树 (Huffman Tree)](src/main/java/simple/tree/ht)
 - 基于日志结构的合并树 (Log-Structured Merge-Tree 或 LSM-Tree)
 - KP树 (Burkhard-Keller树)

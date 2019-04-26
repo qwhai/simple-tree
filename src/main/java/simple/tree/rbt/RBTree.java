@@ -155,7 +155,7 @@ public class RBTree {
         adjust(node);
     }
 
-    /*
+    /**
     private void adjust(TreeNode node) {
         // 小于3层不用操作
         while (null != node.getParent() && null != node.getParent().getParent() && NodeSkin.Red == node.getParent().getSkin()) {
@@ -215,9 +215,7 @@ public class RBTree {
                 }
             }
         }
-    }*/
-
-    /*
+    }
     private void adjust(TreeNode node) {
         // 只有当父节点为红色才需要进行平衡处理
         while (NodeSkin.Red == node.getParent().getSkin()) {
@@ -238,7 +236,6 @@ public class RBTree {
                 node.getParent().getParent().setSkin(NodeSkin.Red);
                 leftRotate(node.getParent().getParent());
             } else {
-                // TODO
                 INode left = node.getParent().getParent().getLeft();
                 if (NodeSkin.Red == left.getSkin()) {
                     node.getParent().setSkin(NodeSkin.Black);
