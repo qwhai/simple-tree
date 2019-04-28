@@ -1,5 +1,6 @@
 package simple.tree;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import simple.tree.ht.HuffmanTree;
@@ -10,6 +11,8 @@ import simple.tree.ht.HuffmanTree;
  */
 public class HuffmanTreeTest {
 
+    private final Logger logger = Logger.getLogger(HuffmanTreeTest.class);
+
     @Test
     public void test1() {
         int[] arr = new int[] {
@@ -19,18 +22,20 @@ public class HuffmanTreeTest {
         HuffmanTree tree = new HuffmanTree();
         tree.build(arr);
 
-        Assert.assertEquals(50, tree.getWPL());
+        Assert.assertEquals(126, tree.getWPL());
     }
 
     @Test
     public void test2() {
         int[] arr = new int[] {
-                5, 8, 4, 11, 9, 60
+                5, 8, 4, 11, 9, 13
         };
 
         HuffmanTree tree = new HuffmanTree();
         tree.build(arr);
 
-        Assert.assertEquals(97, tree.getWPL());
+        for (int i = 0; i < arr.length; i++) {
+            logger.info(String.format("arr[%d]: val = %d, hc = %s", i, arr[i], tree.getHuffmanCode(arr[i])));
+        }
     }
 }

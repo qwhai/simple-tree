@@ -30,4 +30,9 @@ public class LeafNode implements INode {
     public void setParent(INode parent) {
         this.parent = parent;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%d]", getWk());
+    }
 }
