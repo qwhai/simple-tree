@@ -112,113 +112,77 @@ public class RBTree {
         root = null;
     }
 
+    /**
+     * RB-INSERT(T, z)
+     *  y ← nil[T]                        // 新建节点“y”，将y设为空节点。
+     *  x ← root[T]                       // 设“红黑树T”的根节点为“x”
+     *  while x ≠ nil[T]                  // 找出要插入的节点“z”在二叉树T中的位置“y”
+     *      do y ← x
+     *         if key[z] < key[x]
+     *            then x ← left[x]
+     *            else x ← right[x]
+     *  p[z] ← y                          // 设置 “z的父亲” 为 “y”
+     *  if y = nil[T]
+     *     then root[T] ← z               // 情况1：若y是空节点，则将z设为根
+     *     else if key[z] < key[y]
+     *             then left[y] ← z       // 情况2：若“z所包含的值” < “y所包含的值”，则将z设为“y的左孩子”
+     *             else right[y] ← z      // 情况3：(“z所包含的值” >= “y所包含的值”)将z设为“y的右孩子”
+     *  left[z] ← nil[T]                  // z的左孩子设为空
+     *  right[z] ← nil[T]                 // z的右孩子设为空。至此，已经完成将“节点z插入到二叉树”中了。
+     *  color[z] ← RED                    // 将z着色为“红色”
+     *  RB-INSERT-FIXUP(T, z)             // 通过RB-INSERT-FIXUP对红黑树的节点进行颜色修改以及旋转，让树T仍然是一颗红黑树
+     */
     private void insert(TreeNode node) {
-        if (null == root) {
+        TreeNode y = null;
+        INode x = root;
+        while (x instanceof TreeNode) {
+            y = (TreeNode) x;
+            if (node.getVal() < ((TreeNode)x).getVal())
+                x = ((TreeNode)x).getLeft();
+            else
+                x = ((TreeNode)x).getRight();
+        }
+
+        node.setParent(y);
+        if (null == y) {
             root = node;
-            root.setSkin(NodeSkin.Black);
         } else {
-            insert(node, root);
-        }
-    }
-
-    private void insert(TreeNode node, TreeNode parent) {
-        if (node.getVal() < parent.getVal()) {
-            if (parent.getLeft() instanceof NILNode) {
-                insertLeft(node, parent);
+            if (node.getVal() < y.getVal()) {
+                y.setLeft(node);
             } else {
-                insert(node, (TreeNode) parent.getLeft());
-            }
-        } else {
-            if (parent.getRight() instanceof NILNode) {
-                insertRight(node, parent);
-            } else {
-                insert(node, (TreeNode) parent.getRight());
+                y.setRight(node);
             }
         }
-    }
 
-    private void insertLeft(TreeNode node, TreeNode parent) {
-        if (NodeSkin.Red == parent.getSkin()) {
-            node.setSkin(NodeSkin.Black);
-        }
-
-        parent.setLeft(node);
-        adjust(node);
-    }
-
-    private void insertRight(TreeNode node, TreeNode parent) {
-        if (NodeSkin.Red == parent.getSkin()) {
-            node.setSkin(NodeSkin.Black);
-        }
-
-        parent.setRight(node);
+        node.setSkin(NodeSkin.Red);
         adjust(node);
     }
 
     /**
+     * RB-INSERT-FIXUP(T, z)
+     * while color[p[z]] = RED                                                  // 若“当前节点(z)的父节点是红色”，则进行以下处理。
+     *     do if p[z] = left[p[p[z]]]                                           // 若“z的父节点”是“z的祖父节点的左孩子”，则进行以下处理。
+     *           then y ← right[p[p[z]]]                                        // 将y设置为“z的叔叔节点(z的祖父节点的右孩子)”
+     *                if color[y] = RED                                         // Case 1条件：叔叔是红色
+     *                   then color[p[z]] ← BLACK                    ▹ Case 1   //  (01) 将“父节点”设为黑色。
+     *                        color[y] ← BLACK                       ▹ Case 1   //  (02) 将“叔叔节点”设为黑色。
+     *                        color[p[p[z]]] ← RED                   ▹ Case 1   //  (03) 将“祖父节点”设为“红色”。
+     *                        z ← p[p[z]]                            ▹ Case 1   //  (04) 将“祖父节点”设为“当前节点”(红色节点)
+     *                   else if z = right[p[z]]                                // Case 2条件：叔叔是黑色，且当前节点是右孩子
+     *                           then z ← p[z]                       ▹ Case 2   //  (01) 将“父节点”作为“新的当前节点”。
+     *                                LEFT-ROTATE(T, z)              ▹ Case 2   //  (02) 以“新的当前节点”为支点进行左旋。
+     *                           color[p[z]] ← BLACK                 ▹ Case 3   // Case 3条件：叔叔是黑色，且当前节点是左孩子。(01) 将“父节点”设为“黑色”。
+     *                           color[p[p[z]]] ← RED                ▹ Case 3   //  (02) 将“祖父节点”设为“红色”。
+     *                           RIGHT-ROTATE(T, p[p[z]])            ▹ Case 3   //  (03) 以“祖父节点”为支点进行右旋。
+     *        else (same as then clause with "right" and "left" exchanged)      // 若“z的父节点”是“z的祖父节点的右孩子”，将上面的操作中“right”和“left”交换位置，然后依次执行。
+     * color[root[T]] ← BLACK
+     */
     private void adjust(TreeNode node) {
-        // 小于3层不用操作
-        while (null != node.getParent() && null != node.getParent().getParent() && NodeSkin.Red == node.getParent().getSkin()) {
-            // 左外侧
-            if (node.getParent() == node.getParent().getParent().getLeft() && node == node.getParent().getLeft()) {
-                // 如果没有叔节点（只可能有一个红色叔节点）旋转一次，无需向上调整
-                if (null == node.getParent().getParent().getRight()) {
-                    node.getParent().setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-                    rightRotate(node.getParent().getParent());
-                    break;
-                } else {
-                    node.setSkin(NodeSkin.Black);
-                    rightRotate(node.getParent().getParent());
-                    node = node.getParent();
-                }
-            }
-            // 右外侧
-            else if (node.getParent() == node.getParent().getParent().getRight() && node == node.getParent().getRight()) {
-                if (null == node.getParent().getParent().getLeft()) {
-                    node.getParent().setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-                    leftRotate(node.getParent().getParent());
-                    break;
-                } else {
-                    node.setSkin(NodeSkin.Black);
-                    leftRotate(node.getParent().getParent());
-                    node = node.getParent();
-                }
-            }
-            // 左-右
-            else if (node.getParent() == node.getParent().getParent().getLeft() && node == node.getParent().getRight()) {
-                if (null == node.getParent().getParent().getRight()) {
-                    node.setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-                    leftRotate(node.getParent());
-                    rightRotate(node.getParent());
-                    break;
-                } else {
-                    node.getParent().setSkin(NodeSkin.Black);
-                    leftRotate(node.getParent());
-                    rightRotate(node.getParent());
-                }
-            }
-            // 右-左
-            else if (node.getParent() == node.getParent().getParent().getRight() && node == node.getParent().getLeft()) {
-                if (null == node.getParent().getParent().getLeft()) {
-                    node.setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-                    rightRotate(node.getParent());
-                    leftRotate(node.getParent());
-                    break;
-                } else {
-                    node.getParent().setSkin(NodeSkin.Black);
-                    rightRotate(node.getParent());
-                    leftRotate(node.getParent());
-                }
-            }
-        }
-    }
-    private void adjust(TreeNode node) {
-        // 只有当父节点为红色才需要进行平衡处理
+        if (null == node.getParent()) return;
+
         while (NodeSkin.Red == node.getParent().getSkin()) {
+            if (null == node.getParent().getParent()) continue;
+
             if (node.getParent() == node.getParent().getParent().getLeft()) {
                 INode right = node.getParent().getParent().getRight();
                 if (NodeSkin.Red == right.getSkin()) {
@@ -227,14 +191,16 @@ public class RBTree {
                     node.getParent().getParent().setSkin(NodeSkin.Red);
 
                     node = node.getParent().getParent();
-                } else if (node == node.getParent().getRight()) {
-                    node = node.getParent();
-                    rightRotate(node);
+                } else {
+                    if (node == node.getParent().getRight()) {
+                        node = node.getParent();
+                        leftRotate(node); // rightRotate(node);
+                    } else {
+                        node.getParent().setSkin(NodeSkin.Black);
+                        node.getParent().getParent().setSkin(NodeSkin.Red);
+                        rightRotate(node.getParent().getParent()); // leftRotate(node.getParent().getParent());
+                    }
                 }
-
-                node.getParent().setSkin(NodeSkin.Black);
-                node.getParent().getParent().setSkin(NodeSkin.Red);
-                leftRotate(node.getParent().getParent());
             } else {
                 INode left = node.getParent().getParent().getLeft();
                 if (NodeSkin.Red == left.getSkin()) {
@@ -243,89 +209,83 @@ public class RBTree {
                     node.getParent().getParent().setSkin(NodeSkin.Red);
 
                     node = node.getParent().getParent();
-                } else if (node == node.getParent().getLeft()) {
-                    node = node.getParent();
-                    leftRotate(node);
+                } else {
+                    if (node == node.getParent().getLeft()) {
+                        node = node.getParent();
+                        rightRotate(node);
+                    } else {
+                        node.getParent().setSkin(NodeSkin.Black);
+                        node.getParent().getParent().setSkin(NodeSkin.Red);
+                        leftRotate(node.getParent().getParent());
+                    }
                 }
-
-                node.getParent().setSkin(NodeSkin.Black);
-                node.getParent().getParent().setSkin(NodeSkin.Red);
-                rightRotate(node.getParent().getParent());
-            }
-        }
-    }*/
-
-    private void adjust(TreeNode node) {
-        // 只有当父节点为红色才需要进行平衡处理
-        while (NodeSkin.Red == node.getParent().getSkin()) {
-            if (node.getParent() == node.getParent().getParent().getLeft()) {
-                INode right = node.getParent().getParent().getRight();
-                if (NodeSkin.Red == right.getSkin()) {
-                    node.getParent().setSkin(NodeSkin.Black);
-                    right.setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-
-                    node = node.getParent().getParent();
-                } else if (node == node.getParent().getRight()) {
-                    node = node.getParent();
-                    rightRotate(node);
-                }
-
-                node.getParent().setSkin(NodeSkin.Black);
-                node.getParent().getParent().setSkin(NodeSkin.Red);
-                leftRotate(node.getParent().getParent());
-            } else {
-                // TODO
             }
         }
     }
 
+    /**
+     * LEFT-ROTATE(T, x)
+     *      y ← right[x]            // 前提：这里假设x的右孩子为y。下面开始正式操作
+     *      right[x] ← left[y]      // 将 “y的左孩子” 设为 “x的右孩子”，即 将β设为x的右孩子
+     *      p[left[y]] ← x          // 将 “x” 设为 “y的左孩子的父亲”，即 将β的父亲设为x
+     *      p[y] ← p[x]             // 将 “x的父亲” 设为 “y的父亲”
+     *      if p[x] = nil[T]
+     *      then root[T] ← y                 // 情况1：如果 “x的父亲” 是空节点，则将y设为根节点
+     *      else if x = left[p[x]]
+     *            then left[p[x]] ← y    // 情况2：如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
+     *            else right[p[x]] ← y   // 情况3：(x是它父节点的右孩子) 将y设为“x的父节点的右孩子”
+     *      left[y] ← x             // 将 “x” 设为 “y的左孩子”
+     *      p[x] ← y                // 将 “x的父节点” 设为 “y”
+     */
     private void leftRotate(TreeNode node) {
-        // TODO
-        TreeNode temp = (TreeNode) node.getRight();
-        node.setRight(temp.getLeft());
-        if (null != node.getRight()) {
-            node.getRight().setParent(node);
-        }
-
-        temp.setParent(node.getParent());
-
-        if (null != temp.getParent()) {
-            if (node.getParent().getLeft() == node) {
-                temp.getParent().setLeft(temp);
-            } else {
-                temp.getParent().setRight(temp);
-            }
+        INode right = node.getRight();
+        node.setRight(((TreeNode) right).getLeft());
+        ((TreeNode) right).getLeft().setParent(node);
+        right.setParent(node.getParent());
+        if (null == node.getParent()) {
+            root = (TreeNode) right;
         } else {
-            root = temp;
+            if (node == node.getParent().getLeft()) {
+                node.getParent().setLeft(right);
+            } else {
+                node.getParent().setRight(right);
+            }
         }
 
-        temp.setLeft(node);
-        node.setParent(temp);
+        ((TreeNode) right).setLeft(node);
+        node.setParent((TreeNode) right); // TODO
     }
 
+    /**
+     * RIGHT-ROTATE(T, y)
+     *      x ← left[y]             // 前提：这里假设y的左孩子为x。下面开始正式操作
+     *      left[y] ← right[x]      // 将 “x的右孩子” 设为 “y的左孩子”，即 将β设为y的左孩子
+     *      p[right[x]] ← y         // 将 “y” 设为 “x的右孩子的父亲”，即 将β的父亲设为y
+     *      p[x] ← p[y]             // 将 “y的父亲” 设为 “x的父亲”
+     *      if p[y] = nil[T]
+     *      then root[T] ← x                 // 情况1：如果 “y的父亲” 是空节点，则将x设为根节点
+     *      else if y = right[p[y]]
+     *            then right[p[y]] ← x   // 情况2：如果 y是它父节点的右孩子，则将x设为“y的父节点的左孩子”
+     *            else left[p[y]] ← x    // 情况3：(y是它父节点的左孩子) 将x设为“y的父节点的左孩子”
+     *      right[x] ← y            // 将 “y” 设为 “x的右孩子”
+     *      p[y] ← x                // 将 “y的父节点” 设为 “x”
+     */
     private void rightRotate(TreeNode node) {
-        // TODO
-        TreeNode temp = (TreeNode) node.getLeft();
-        node.setLeft(temp.getRight());
-
-        if (null != node.getLeft()) {
-            node.getLeft().setParent(node);
-        }
-
-        temp.setParent(node.getParent());
-
-        if (null != temp.getParent()) {
-            if (node.getParent().getLeft() == node) {
-                temp.getParent().setLeft(temp);
-            } else {
-                temp.getParent().setRight(temp);
-            }
+        INode left = node.getLeft();
+        node.setLeft(((TreeNode) left).getRight());
+        ((TreeNode) left).getRight().setParent(node);
+        left.setParent(node.getParent());
+        if (null == node.getParent()) {
+            root = (TreeNode) left;
         } else {
-            root = temp;
+            if (node == node.getParent().getRight()) {
+                node.getParent().setRight(left);
+            } else {
+                node.getParent().setLeft(left);
+            }
         }
 
-        temp.setRight(node);
-        node.setParent(temp);
+        ((TreeNode) left).setRight(node);
+        node.setParent((TreeNode) left);
     }
 }

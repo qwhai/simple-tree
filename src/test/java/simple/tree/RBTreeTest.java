@@ -31,6 +31,8 @@ public class RBTreeTest {
 
         RBTree tree = new RBTree();
         tree.build(elements);
+
+        logger.info(tree);
     }
 
     // 测试红黑树的变色及旋转
