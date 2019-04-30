@@ -20,7 +20,7 @@
     - 2-3查找树
     - B+ Tree
     - B* Tree
-- 字典树 (Trie Tree)
+- [字典树 (Trie Tree)](src/main/java/simple/tree/trie)
     - Double-Array Trie
 - 森林
 - [哈夫曼树 (Huffman Tree)](src/main/java/simple/tree/ht)
