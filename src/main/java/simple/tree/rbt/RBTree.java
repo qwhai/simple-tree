@@ -138,54 +138,47 @@ public class RBTree {
         adjust(node);
     }
 
-    private void adjust(TreeNode node) {
-        while (null != node.getParent() && NodeSkin.Red == node.getParent().getSkin()) {
-            if (null == node.getParent().getParent()) continue;
-
-            if (node.getParent() == node.getParent().getParent().getLeft()) {
-                INode right = node.getParent().getParent().getRight();
+    private void adjust(TreeNode x) {
+        while (null != x.getParent() && NodeSkin.Red == x.getParent().getSkin()) {
+            if (null == x.getParent().getParent()) continue;
+            if (x.getParent() == x.getParent().getParent().getLeft()) {
+                INode right = x.getParent().getParent().getRight();
                 if (NodeSkin.Red == right.getSkin()) {
-                    node.getParent().setSkin(NodeSkin.Black);
+                    x.getParent().setSkin(NodeSkin.Black);
                     right.setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-
-                    node = node.getParent().getParent();
-                    continue;
+                    x.getParent().getParent().setSkin(NodeSkin.Red);
+                    x = x.getParent().getParent();
                 } else {
-                    // TODO ?
-                    if (node == node.getParent().getRight()) {
-                        node = node.getParent();
-                        leftRotate(node); // rightRotate(node);
+                    if (x == x.getParent().getRight()) {
+                        x = x.getParent();
+                        leftRotate(x);
                     }
 
-                    node.getParent().setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-                    rightRotate(node.getParent().getParent()); // leftRotate(node.getParent().getParent());
-                    continue;
+                    x.getParent().setSkin(NodeSkin.Black);
+                    x.getParent().getParent().setSkin(NodeSkin.Red);
+                    rightRotate(x.getParent().getParent());
                 }
-            } else if (node.getParent() == node.getParent().getParent().getRight()) {
-                INode left = node.getParent().getParent().getLeft();
+            } else {
+                INode left = x.getParent().getParent().getLeft();
                 if (NodeSkin.Red == left.getSkin()) {
-                    node.getParent().setSkin(NodeSkin.Black);
+                    x.getParent().setSkin(NodeSkin.Black);
                     left.setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-
-                    node = node.getParent().getParent();
-                    continue;
+                    x.getParent().getParent().setSkin(NodeSkin.Red);
+                    x = x.getParent().getParent();
                 } else {
-                    // TODO ?
-                    if (node == node.getParent().getLeft()) {
-                        node = node.getParent();
-                        rightRotate(node);
+                    if (x == x.getParent().getLeft()) {
+                        x = x.getParent();
+                        rightRotate(x);
                     }
 
-                    node.getParent().setSkin(NodeSkin.Black);
-                    node.getParent().getParent().setSkin(NodeSkin.Red);
-                    leftRotate(node.getParent().getParent());
-                    continue;
+                    x.getParent().setSkin(NodeSkin.Black);
+                    x.getParent().getParent().setSkin(NodeSkin.Red);
+                    leftRotate(x.getParent().getParent());
                 }
             }
         }
+
+        root.setSkin(NodeSkin.Black);
     }
 
     private void leftRotate(TreeNode node) {
@@ -204,7 +197,7 @@ public class RBTree {
         }
 
         ((TreeNode) right).setLeft(node);
-        node.setParent((TreeNode) right); // TODO
+        node.setParent((TreeNode) right);
     }
 
     private void rightRotate(TreeNode node) {
@@ -212,6 +205,7 @@ public class RBTree {
         node.setLeft(((TreeNode) left).getRight());
         ((TreeNode) left).getRight().setParent(node);
         left.setParent(node.getParent());
+
         if (null == node.getParent()) {
             root = (TreeNode) left;
         } else {

@@ -64,6 +64,6 @@ public class TreeNode implements INode {
 
     @Override
     public String toString() {
-        return String.format("[%d]", getVal());
+        return String.format("[%d (%s)]", getVal(), getSkin());
     }
 }

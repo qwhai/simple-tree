@@ -38,23 +38,23 @@ public class RBTreeTest {
     // 测试红黑树的变色及旋转
     @Test
     public void test2() {
-        Element[] elements = new Element[] {
-                new Element(13),
-                new Element(17),
-                new Element(8),
-                new Element(1),
-                new Element(25),
-                new Element(15),
-                new Element(11),
-                new Element(6),
-                new Element(22),
-                new Element(27)
-        };
-
         RBTree tree = new RBTree();
-        tree.build(elements);
 
-        tree.insert(new Element(21));
+        tree.insert(new Element(1));
+        tree.insert(new Element(2));
+        tree.insert(new Element(3));
+        tree.insert(new Element(4));
+        tree.insert(new Element(5));
+        tree.insert(new Element(6));
+        tree.insert(new Element(7));
+        tree.insert(new Element(8));
+        tree.insert(new Element(9));
+        tree.insert(new Element(10));
+        tree.insert(new Element(11));
+        tree.insert(new Element(12));
+        tree.insert(new Element(13));
+        tree.insert(new Element(14));
+        tree.insert(new Element(15));
 
         logger.info(tree);
     }
