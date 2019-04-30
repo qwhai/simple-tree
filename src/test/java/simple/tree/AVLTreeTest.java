@@ -1,7 +1,8 @@
-package simple.tree.avl;
+package simple.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
+import simple.tree.avl.AVLTree;
 import simple.tree.avl.model.Element;
 
 /**

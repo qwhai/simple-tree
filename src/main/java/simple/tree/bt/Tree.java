@@ -27,7 +27,7 @@ public class Tree {
      * @param input
      *      用于构建二叉树的输入数组
      */
-    void build(Element[] input) {
+    public void build(Element[] input) {
         clear();
         nodesQueue = new ArrayBlockingQueue<>(input.length);
         for (Element e : input) {
@@ -42,7 +42,7 @@ public class Tree {
      * @return
      *      遍历结果
      */
-    List<Element> preorderTraversal() {
+    public List<Element> preorderTraversal() {
         List<Element> list = new ArrayList<>(); // 保存结果list
         preorder(root, list);
         return list;
@@ -65,7 +65,7 @@ public class Tree {
      * @return
      *      遍历结果
      */
-    List<Element> inorderTraversal() {
+    public List<Element> inorderTraversal() {
         List<Element> list = new ArrayList<>();
         inorder(root, list);
         return list;
@@ -88,7 +88,7 @@ public class Tree {
      * @return
      *      遍历结果
      */
-    List<Element> postorderTraversal() {
+    public List<Element> postorderTraversal() {
         List<Element> list = new ArrayList<>();
         postorder(root, list);
         return list;
@@ -111,7 +111,7 @@ public class Tree {
      * @return
      *      遍历结果
      */
-    List<Element> levelorderTraversal() {
+    public List<Element> levelorderTraversal() {
         List<Element> list = new ArrayList<>();
         Queue<TreeNode> queue = new ArrayBlockingQueue<>(10);
         levelorder(root, list, queue);

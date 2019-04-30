@@ -19,7 +19,7 @@ public class AVLTree {
     public TreeNode root;
     private Map<RotateType, Adjustable> adjustableMap = new HashMap<>();
 
-    AVLTree()
+    public AVLTree()
     {
         adjustableMap.put(RotateType.LL, new AdjustLL());
         adjustableMap.put(RotateType.LR, new AdjustLR());
@@ -31,7 +31,7 @@ public class AVLTree {
      * 构建AVL树
      * @param elements  输入数据
      */
-    void build(Element[] elements) {
+    public void build(Element[] elements) {
         clear();
         for (Element element : elements) {
             insert(new TreeNode(element.getVal()));

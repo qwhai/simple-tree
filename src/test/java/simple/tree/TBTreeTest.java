@@ -1,8 +1,9 @@
-package simple.tree.tbt;
+package simple.tree;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import simple.tree.tbt.TBTree;
 import simple.tree.tbt.model.Element;
 
 import java.util.List;

@@ -1,7 +1,8 @@
-package simple.tree.bst;
+package simple.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
+import simple.tree.bst.BSTree;
 import simple.tree.bst.model.Element;
 import simple.tree.bst.model.TreeNode;
 

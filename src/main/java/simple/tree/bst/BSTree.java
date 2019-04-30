@@ -9,18 +9,18 @@ import simple.tree.bst.model.TreeNode;
  * @Author:     Q-WHai
  * @Date:       Created in 16:15 2019/04/04
  */
-class BSTree {
+public class BSTree {
 
     private TreeNode root;
 
-    BSTree() { }
+    public BSTree() { }
 
     /**
      * 构建二叉搜索树
      *
      * @param elements  输入数据
      */
-    void build(Element[] elements) {
+    public void build(Element[] elements) {
         clear();
         for (Element e : elements) {
             insert(new TreeNode(e.getVal()));
@@ -33,7 +33,7 @@ class BSTree {
      * @param x     待查找数值
      * @return      对应节点
      */
-    TreeNode find(int x) {
+    public TreeNode find(int x) {
         return find(x, root);
     }
 
@@ -42,7 +42,7 @@ class BSTree {
      *
      * @param x     待移除数值
      */
-    void remove(int x) {
+    public void remove(int x) {
         // TODO
     }
 

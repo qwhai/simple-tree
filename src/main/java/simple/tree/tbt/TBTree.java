@@ -13,11 +13,11 @@ import java.util.concurrent.ArrayBlockingQueue;
  * @Author: Q-WHai
  * @Date: Created in 10:06 2019/04/08
  */
-class TBTree {
+public class TBTree {
 
     private INode root;
 
-    TBTree() { }
+    public TBTree() { }
 
     /**
      * 构建二叉树
@@ -25,7 +25,7 @@ class TBTree {
      * @param elements
      *      输入数据
      */
-    void build(Element[] elements) {
+    public void build(Element[] elements) {
         clear();
         nodesQueue = new ArrayBlockingQueue<>(elements.length);
         for (Element e : elements) {
@@ -39,28 +39,28 @@ class TBTree {
     /**
      * 前序线索化二叉树
      */
-    void preorderThreading() {
+    public void preorderThreading() {
         preorderThreading(root);
     }
 
     /**
      * 中序线索化二叉树
      */
-    void inorderThreading() {
+    public void inorderThreading() {
         inorderThreading(root);
     }
 
     /**
      * 后序线索化二叉树
      */
-    void postorderThreading() {
+    public void postorderThreading() {
         postorderThreading(root);
     }
 
     /**
      * 层序线索化二叉树
      */
-    void levelorderThreading() {
+    public void levelorderThreading() {
         levelorderThreading(root, null);
     }
 
@@ -70,7 +70,7 @@ class TBTree {
      * @return
      *      遍历结果
      */
-    List<Element> preorderTraversal() {
+    public List<Element> preorderTraversal() {
         List<Element> list = new ArrayList<>();
         preorder(root, list);
 
@@ -83,7 +83,7 @@ class TBTree {
      * @return
      *      遍历结果
      */
-    List<Element> inorderTraversal() {
+    public List<Element> inorderTraversal() {
         List<Element> list = new ArrayList<>();
 
         INode node = root;
@@ -107,7 +107,7 @@ class TBTree {
      * @return
      *      遍历结果
      */
-    List<Element> postorderTraversal() {
+    public List<Element> postorderTraversal() {
         List<Element> list = new ArrayList<>();
 
         INode node = root;

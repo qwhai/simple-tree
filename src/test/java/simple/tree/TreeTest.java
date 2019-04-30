@@ -1,8 +1,9 @@
-package simple.tree.bt;
+package simple.tree;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import simple.tree.bt.Tree;
 import simple.tree.bt.model.Element;
 
 import java.util.List;
