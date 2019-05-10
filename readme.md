@@ -1,5 +1,10 @@
 ## simple-tree
-> demos for tree training
+
+> samples for tree training
+
+![](https://img.shields.io/badge/java-12-brightgreen.svg)
+![](https://img.shields.io/badge/ide-IntelliJ%20IDEA-brown.svg)
+![](https://img.shields.io/badge/maven-3.6.0-coral.svg)
 
 - [二叉树 (Binary Tree)](src/main/java/simple/tree/bt)
     - [二叉树的遍历 (Traversing Binary Tree)](src/main/java/simple/tree/bt)

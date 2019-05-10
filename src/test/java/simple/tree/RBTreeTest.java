@@ -55,6 +55,11 @@ public class RBTreeTest {
         tree.insert(new Element(13));
         tree.insert(new Element(14));
         tree.insert(new Element(15));
+        tree.insert(new Element(16));
+        tree.insert(new Element(17));
+        tree.insert(new Element(18));
+        tree.insert(new Element(19));
+        tree.insert(new Element(20));
 
         logger.info(tree);
     }
